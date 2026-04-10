@@ -93,8 +93,36 @@
 
 Рассмотрим связь между 2 последними нейронами. Обозначим их следующим образом
 
+<img width="1826" height="974" alt="изображение" src="https://github.com/user-attachments/assets/d47be9e6-12b6-4cec-aed8-ba1ec00fe5c6" />
 
+Выведем зависимость ошибки от входного веса
+<img width="770" height="187" alt="изображение" src="https://github.com/user-attachments/assets/47d633d9-f37b-4c6e-a7e8-63c847d9eabf" />
 
+Вычислим производные
 
+<img width="625" height="558" alt="изображение" src="https://github.com/user-attachments/assets/046fd3c5-8936-4492-9bb3-2987cc315ae8" />
 
+Тогда вся производная примет вид
 
+<img width="776" height="507" alt="изображение" src="https://github.com/user-attachments/assets/68b8ec04-675d-4571-af62-f824cd95f9d9" />
+
+Но не стоит забывать, что это только один компонент из градиента ошибки по отношению ко всем весам и смещениеям
+
+<img width="417" height="718" alt="изображение" src="https://github.com/user-attachments/assets/fcbff9d1-65af-484c-9d5b-c83e097b324c" />
+
+Взяв градиент по смещению, взяв производную (производная Z равна единице) получим такую формулу
+
+<img width="1640" height="216" alt="изображение" src="https://github.com/user-attachments/assets/69fc9643-3996-4d58-9b7d-b9d496d212af" />
+
+Для сетей имеющих больше нейронов в слое, сильно ничего не меняется, просто добавляется индекс
+
+<img width="1108" height="592" alt="изображение" src="https://github.com/user-attachments/assets/43895c70-3360-4115-a40e-3ee13e459c4d" />
+
+Тогда уравнение Z примет следующий вид
+<img width="1108" height="592" alt="изображение" src="https://github.com/user-attachments/assets/dd007d6d-201a-468a-9c68-7a16e6da112b" />
+
+И в итоге
+
+<img width="1862" height="928" alt="изображение" src="https://github.com/user-attachments/assets/9f7e6d0e-a4aa-405c-8a90-05969a74db1e" />
+
+Теперь пойдем от ошибки к началу тогда взятые производные будут накапливаться (то есть мы накидываем выражения друг на друга, а не пытаемся из менить все целиком)
