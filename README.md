@@ -41,6 +41,9 @@
 
 Фон
 
+<img width="618" height="296" alt="изображение" src="https://github.com/user-attachments/assets/18f8780b-9a88-4ea0-8d0b-28f83306ed7a" />
+
+
 <img width="578" height="470" alt="изображение" src="https://github.com/user-attachments/assets/b0df97ee-5f44-46d2-853c-ab18d20e902a" />
 
 Сравнение
@@ -51,8 +54,13 @@
 
 <img width="555" height="421" alt="изображение" src="https://github.com/user-attachments/assets/1e5c1341-13b1-463e-90ae-16bac4c3cba7" />
 
-Бинаризация
+Результат работы после морфологической операции закрытия (эрозия + делатация) + бинаризация
 
 <img width="537" height="408" alt="изображение" src="https://github.com/user-attachments/assets/04b9b898-0a8d-4dfd-b4d5-c127c4a3a329" />
 
 Перезапусти и вставь картинку с центром масс
+<img width="590" height="487" alt="изображение" src="https://github.com/user-attachments/assets/36005745-75f3-43a4-aa60-663604e99fb4" />
+
+И финальная траектория
+<img width="589" height="443" alt="изображение" src="https://github.com/user-attachments/assets/2ac0db06-9bf7-4f56-8ebf-581d809a7667" />
+
