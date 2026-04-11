@@ -4,9 +4,9 @@
 1) Немного теории
 2) Реализация на практике
 
-Сверточная нейронная сеть - это специализированный тип искусственной нейронной сети, предназначенный для эффективной обработки данных, имеющих сетчатую (решетчатую) структуру, в частности, изображений, видео, аудиосигналов и текста.
+Рассмотрим самую банальную сверточную сеть
 
-Но это не отвечает на вопрос КАК?
+вопрос КАК?
 
 <img width="1297" height="999" alt="изображение" src="https://github.com/user-attachments/assets/ffe395c9-2138-480e-bc96-bf55bab320cc" />
 
@@ -126,3 +126,109 @@
 <img width="1862" height="928" alt="изображение" src="https://github.com/user-attachments/assets/9f7e6d0e-a4aa-405c-8a90-05969a74db1e" />
 
 Теперь пойдем от ошибки к началу тогда взятые производные будут накапливаться (то есть мы накидываем выражения друг на друга, а не пытаемся из менить все целиком)
+
+Рассмотрим схемки описывающие работу нейронных сетей.
+
+<img width="1260" height="625" alt="изображение" src="https://github.com/user-attachments/assets/d1f958f1-b8ed-47b6-bc0b-b61353c01e0a" />
+
+Фильтр (ядро свертки) имеет ту же глубину, что и входное изображение (3 канала RGB). Он сканирует изображение с шагом 1, перемножая свои веса с соответствующими пикселями и суммируя результат. Так мы получаем карту активаций (28×28×1), где высокие значения означают, что в данном участке изображения присутствует паттерн, похожий на фильтр.
+
+Зачем это надо?  
+Уменьшается размерность (с 32×32×3 до 28×28×6), но информация не теряется, а наоборот — становится более «понятной» для следующих слоев.  
+Свертка инвариантна к сдвигу: если признак чуть сместится, он все равно активирует тот же фильтр.
+Веса фильтров обучаются (а не задаются вручную), поэтому сеть сама находит оптимальные признаки для своей задачи.  
+
+<img width="685" height="333" alt="изображение" src="https://github.com/user-attachments/assets/247c982f-727e-4c86-9921-f2023b546ad9" />
+
+Далее применяем пулинг (Слой агрегирования для уменьшения размерности)
+
+<img width="1192" height="783" alt="изображение" src="https://github.com/user-attachments/assets/9935a545-d101-439c-a2ed-5f34a514b287" />
+
+Итак, пулиннг имеет следущие свойства
+
+<img width="818" height="527" alt="изображение" src="https://github.com/user-attachments/assets/c9124fc2-a36e-4d51-82e7-904e54111efb" />
+
+Рассмотрим несколько примеров
+
+<img width="1649" height="752" alt="изображение" src="https://github.com/user-attachments/assets/2a9c09e0-0c0c-4528-8493-ca08ff8eadf5" />
+
+VGG
+
+<img width="673" height="357" alt="изображение" src="https://github.com/user-attachments/assets/c454840c-dedf-42fc-9fea-c136cbae4afe" />
+
+GoogleNet
+
+<img width="1273" height="857" alt="изображение" src="https://github.com/user-attachments/assets/948ee39b-0112-4b76-9c79-e249bf4d8fc5" />
+
+ResNett
+
+<img width="1290" height="817" alt="изображение" src="https://github.com/user-attachments/assets/0dd03cce-d469-41d6-87bf-820046687a0a" />
+
+Также можно использовать свертку 1 на 1 для получения карт активаций той же размерности
+
+<img width="673" height="217" alt="изображение" src="https://github.com/user-attachments/assets/bbc3dcf4-f5c6-470f-b0a8-6d91dcae95a6" />
+
+Чуваки начали применять перенос весов для решения проблемы затухания градиента
+
+<img width="1260" height="628" alt="изображение" src="https://github.com/user-attachments/assets/cdc1a06b-3d66-47d3-8e37-04a57b54a8a9" />
+
+<img width="1762" height="801" alt="изображение" src="https://github.com/user-attachments/assets/3eb12797-732d-46ba-9227-af8cc9d06891" />
+
+Yolo (you only look once)
+
+<img width="1722" height="704" alt="изображение" src="https://github.com/user-attachments/assets/dd5e4611-32b9-4902-8fc0-51550669c8c9" />
+
+<img width="1358" height="826" alt="изображение" src="https://github.com/user-attachments/assets/9561ea29-3919-4800-9159-ded1b2cc2b4d" />
+
+<img width="1368" height="710" alt="изображение" src="https://github.com/user-attachments/assets/487381a7-def4-47ef-8b03-008134d10228" />
+
+Теперь глянем мою работу
+
+Нашел датасет английских букв (1 буква записана в ячейку 1х785)  
+Изображение 28х28 и 1 метка  
+Загрузил его
+
+
+<img width="647" height="403" alt="изображение" src="https://github.com/user-attachments/assets/a8a07959-42dc-455a-aa43-d14d2c1efb97" />
+
+Глянул сколькр примеров каждой буквы
+
+<img width="333" height="540" alt="изображение" src="https://github.com/user-attachments/assets/2a49c520-869d-4670-a85d-f04a69692033" />
+
+Посмотрел вообще как они записаны
+
+<img width="813" height="413" alt="изображение" src="https://github.com/user-attachments/assets/88334988-6b02-4405-8acb-2a0e87294c75" />
+
+Нормализовал и подготовил данные
+
+<img width="222" height="52" alt="изображение" src="https://github.com/user-attachments/assets/9655e1e8-41ee-4dcc-877f-48235f44e0a7" />
+
+На всякий еще раз
+Conv + pooling извлекают локальные примитивы (края,текстуры,простые формы)  
+Flatten меняет формат с 3д на 1д  
+Dense(128) Извлекает глобальные комбинации (там вертикальные линии, горизонтальные,круги)  
+Dense(26) Классифицирует класс (1 из 26)  
+<img width="538" height="469" alt="изображение" src="https://github.com/user-attachments/assets/ec474d8b-6c81-4911-b755-95df1c5bcc5b" />
+
+Батч - кол-во итераций через которые обновляются веса ( мб Эпоха = Все элементы выборки / размер батча)  
+Эпоха - Количество полных проходов по всему обучающему набору данных  
+Validation_split - количество от обучающих данный для проверки на сколько хорошо работает модель (валидации, то есть она не учится а только проверяет себя)  
+Verbose - Что будем выводить (0 - ничего, 1 - Прогресс-бар, потери, точность, 2 - Только значения)  
+<img width="1092" height="389" alt="изображение" src="https://github.com/user-attachments/assets/ac4561e4-fe44-4a70-8fd1-164e8957cc30" />
+
+X_test --- тестовые изображения  
+y_test --- равильные метки для тестовых изображений
+
+ПОлучили точность
+<img width="302" height="33" alt="изображение" src="https://github.com/user-attachments/assets/797202fc-2469-45ae-9c23-45e9f6fe5196" />
+
+Выведем графики
+<img width="795" height="260" alt="изображение" src="https://github.com/user-attachments/assets/b019254a-93ae-4125-a847-14bc2a9c30b5" />
+
+На всякий приведем пример предсказаний
+<img width="432" height="229" alt="изображение" src="https://github.com/user-attachments/assets/0b835e30-df07-4413-99a2-056090317d30" />
+
+Ну и для оценки выведим матрицы корреляции
+<img width="890" height="831" alt="изображение" src="https://github.com/user-attachments/assets/cc5d2952-c129-485b-844e-a22d75dd36cb" />
+
+<img width="876" height="828" alt="изображение" src="https://github.com/user-attachments/assets/dbe48091-034d-4901-8d05-0906ab8328d7" />
